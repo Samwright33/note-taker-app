@@ -1,4 +1,4 @@
-// Require and express are needed for app functionality
+// Needed Dependencies 
 const express = require("express");
 const app = express();
 
