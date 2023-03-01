@@ -37,4 +37,4 @@ app.delete("/api/notes/:id", (req, res) => {
 
     res.JSON(deleteNote);
 });
-}
+};
