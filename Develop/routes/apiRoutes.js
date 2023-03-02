@@ -13,7 +13,7 @@ app.get("./api/notes", (req, res) => {
 
 app.post("./api/notes", (req, res) => {
 
-    let data = fs.readFileSync("db/db.json");
+    let data = fs.readFileSync("/db/db.json");
     data = JSON.parse(db);
     res.json(data);
 
@@ -33,7 +33,7 @@ app.delete("/api/notes/:id", (req, res) => {
 
     let data = JSON.parse(fs.readFileSync("db/db.json"));
     let deleteNote = data.filter(item => item.id !== req.params.id);
-    fs.writeFileSync('db/db.json', JSON.stringify(deleteNote));
+    fs.writeFileSync("db/db.json", JSON.stringify(deleteNote));
 
     res.JSON(deleteNote);
 });
