@@ -1,39 +1,38 @@
 // Needed dependencies
 const path = require("path");
 const fs = require("fs")
-const db = require(".db/db.json");
-const { v4: uuidv4 } = require("uuid");
+const uniqid = require("uniqid")
 
-module.exports = function(app) => {
+module.exports = (app) => {
 
 // GET Route for homepage
-app.get("./api/notes", (req, res) => {
-  res.sendFile(path.join(__dirname, "../db/db.json"))
+app.get("/api/notes", (req, res) => {
+  const db = fs.readFileSync(path.join(__dirname, "../db/db.json"));
+  res.json(JSON.parse(db));
 });
 
-app.post("./api/notes", (req, res) => {
+app.post("/api/notes", (req, res) => {
 
-    let data = fs.readFileSync("/db/db.json");
-    data = JSON.parse(db);
-    res.json(data);
+    const db = fs.readFileSync(path.join(__dirname, "../db/db.json"));
+    const notes = JSON.parse(db);
+    
+    const userNote = {
 
-    let newNote = {
     title: req.body.title,
     text: req.body.text,
-    id = uuidv4()
+    id: uniqid()
     };
 
-    data.push(newNote);
-    fs.writeFileSync("db/db.json", JSON.stringify(data));
-
-    res.json(data);
+    notes.push(userNote);
+    fs.writeFileSync(path.join(__dirname, "../db/db.json"), JSON.stringify(data));
+    res.json(userNote);
 });
 
 app.delete("/api/notes/:id", (req, res) => {
-
-    let data = JSON.parse(fs.readFileSync("db/db.json"));
-    let deleteNote = data.filter(item => item.id !== req.params.id);
-    fs.writeFileSync("db/db.json", JSON.stringify(deleteNote));
+  const db = fs.readFileSync(path.join(__dirname, "../db/db.json"));
+  const notes = JSON.parse(db);
+  const deleteNotes = notes.filter((note))
+    fs.writeFileSync(path.join(__dirname,"../db/db.json"), JSON.stringify(deleteNote));
 
     res.JSON(deleteNote);
 });
