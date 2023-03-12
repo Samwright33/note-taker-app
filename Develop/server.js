@@ -1,9 +1,6 @@
 // Needed Dependencies 
-const express = require("express");
+const express = require('express');
 const app = express();
-
-// Import custom middleware
-app.use(clog);
 
 // Port used
 const PORT = process.env.port || 3001;
